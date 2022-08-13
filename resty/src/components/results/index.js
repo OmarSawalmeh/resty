@@ -1,12 +1,21 @@
-import React from 'react';
-import './result.scss';
+import React from 'react'
+import './result.scss'
 
 function Results(props) {
-    return (
-      <section>
-        <pre>{props.data ? JSON.stringify(props.data, undefined, 2) : null}</pre>
-      </section>
-    );
+  return (
+    <section>
+      <div>
+        <h1>Header</h1>
+        <pre>
+          {props.data ? JSON.stringify(props.data.headers, undefined, 2) : null}
+        </pre>
+        <h1>Data</h1>
+        <pre>
+          {props.data ? JSON.stringify(props.data.data, undefined, 2) : null}
+        </pre>
+      </div>
+    </section>
+  )
 }
 
-export default Results;
+export default Results
