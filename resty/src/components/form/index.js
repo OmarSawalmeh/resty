@@ -1,21 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import './form.scss'
 
 function Form(props) {
   //const [data, setData] = useState();
-  const [method, setMethod] = useState('GET')
-  const [url, setUrl] = useState('https://pokeapi.co/api/v2/pokemon')
+  const [method, setMethod] = useState('');
+  const [url, setUrl] = useState('https://pokeapi.co/api/v2/pokemon');
+  const [body, setBody] = useState('')
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // const formData = {
-    //   method: method,
-    //   url: url,
-    //   data: 'tt',
-    // }
-    // props.handleApiCall(formData)
   }
+
 
   const changeUrl = (e) => {
     setUrl(e.target.value)
@@ -25,27 +21,63 @@ function Form(props) {
     setMethod(method)
   }
 
+
+
+  // USE EFFECT TO SET METHOD FOR EACTH RENDER OR CLICKS IN ANY ROUTE... 
+  //.....
+  useEffect(() => {
+    setMethod(method)
+  }, [method]);
+
+
   const browseUrl = async(e)=>{
     if(method==="GET"){
-      const data = await axios.get(url);
-      console.log(data);
+      const result = await axios.get(url)
+      const data = {
+        header: result.headers,
+        status: result.status,
+        count: result.data.length,
+        response: result.data,
+      }
       props.handleApiCall(data);
     }
     else if(method==='POST'){
-      const data = await axios.post(url)
+      const result = await axios.post(url);
+      const data = {
+        header: result.headers,
+        status: result.status,
+        count: result.data.length,
+        response: result.data,
+      }
       props.handleApiCall(data);
     }
     else if (method === 'DELETE') {
-      const data = await axios.delete(url)
+      const result = await axios.delete(url);
+      const data = {
+        header: result.headers,
+        status: result.status,
+        count: result.data.length,
+        response: result.data,
+      }
       props.handleApiCall(data);
     }
     else if (method === 'PUT') {
-      const data = await axios.put(url)
+      const result = await axios.put(url);
+      const data = {
+        header: result.headers,
+        status: result.status,
+        count: result.data.length,
+        response: result.data,
+      }
       props.handleApiCall(data);
     }
     
   }
 
+   const textHandler = () => {
+     const content = document.getElementById('body').value
+     setBody(content)
+   }
   
 
   return (
@@ -81,6 +113,13 @@ function Form(props) {
           </button>
         </label>
       </form>
+      
+      {method === 'POST' || method === 'PUT' ? (
+        <>
+        <h3>To Add or Update the json data:</h3>
+        <textarea id='bodyText' rows={1111} cols={1000} onInput={textHandler}></textarea>
+        </>
+      ) : null}
     </>
   )
 }
