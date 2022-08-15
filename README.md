@@ -1,5 +1,8 @@
 # **RESTy**
 
+# **Deploy**
+[RESTy - netlify](https://resty-omarsawalmeh.netlify.app/)
+
 ## **RESTy API testing application**
 Build a simple web application using **REACT JS** and style it with **Saas** to rander a route and show data on the home page.
 
