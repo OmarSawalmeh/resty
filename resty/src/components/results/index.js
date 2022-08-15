@@ -17,12 +17,9 @@ function Results(props) {
     //   </div>
     // </section>
 
-    <section>
-      {/* <pre>{props.data ? prettyjson(props.data, false, 2) : null}</pre> */}
-      {/* <JSONPretty id='json-pretty' data={props.data.data} /> */}
-      
-      <JSONPretty id='json-pretty' data={props.data} />
-    </section>
+    <form>
+      <JSONPretty id='json' data={props.data} />
+    </form>
   )
 }
 

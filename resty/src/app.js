@@ -11,7 +11,7 @@ import Results from './components/results';
 
 function App () {
 
-  const [data, setData] = useState('null');
+  const [data, setData] = useState({});
   const apiData = (data) => {
     setData(data)
   }

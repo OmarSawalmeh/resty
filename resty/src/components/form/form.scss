@@ -3,7 +3,7 @@ $radius: 40%;
 
 form {
   display: inline-block;
-  margin: auto;
+  // margin: auto;
   width: 400px;
   display: grid;
   margin-top: 2%;
@@ -14,7 +14,7 @@ form {
 
   label {
     display: flex;
-    margin: 1rem 0;
+    margin: 1rem 5rem;
 
     &.methods {
       span {
@@ -30,3 +30,19 @@ form {
     }
   }
 }
+
+textarea{
+  background: rgb(143, 154, 156);
+  margin-left: 10rem;
+  margin-right: 15rem;
+  margin-top: 1rem;
+  margin-bottom: 5rem;
+}
+
+h3{
+  color: rgb(0, 0, 0);
+  margin-top: 2rem;
+  margin-left: 10rem;
+  margin-right: 15rem;
+}
+
