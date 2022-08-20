@@ -1,22 +1,20 @@
 import React, { useEffect, useState, useReducer } from 'react'
 import axios from 'axios'
 import './form.scss'
+
 import reducer, {
   success,
-  body,
-  reqParams,
   history,
-  getHistory,
 } from '../../reducer'
+
 const initialState = {
   data: [],
-  body: {},
-  reqParams: {},
 }
 
 function Form(props) {
   const [state, dispatch] = useReducer(reducer, initialState)
   const [isLoading, setIsLoading] = useState(false)
+  
 
   const [method, setMethod] = useState('')
   const [url, setUrl] = useState('https://pokeapi.co/api/v2/pokemon')
@@ -59,6 +57,7 @@ function Form(props) {
         }
         setIsLoading(false)
         dispatch(success(data))
+        dispatch(history(data));
         props.handleApiCall(data)
       }, 1000)
     } else if (method === 'POST') {

@@ -1,13 +1,6 @@
 const initialState = {
   data: [],
-  body: {},
-  reqParams: {},
   history: [
-    {
-      method: '',
-      url: '',
-      body: {},
-    },
   ],
 }
 
@@ -18,32 +11,11 @@ export default function reducer(state = initialState, action) {
         ...state,
         data: action.payload,
       }
-    case 'BODY':
-      return {
-        ...state,
-        body: action.payload,
-      }
+    
     case 'HISTORY':
       return {
         ...state,
-        history: [
-          {
-            method: action.payload[0],
-            url: action.payload[1],
-            body: JSON.parse(action.payload[2]),
-          },
-        ],
-      }
-    case 'GET_HISTORY':
-      return {
-        ...state,
-        history: [
-          {
-            method: action.payload[0],
-            url: action.payload[1],
-            body: action.payload[2],
-          },
-        ],
+        history: action.payload,
       }
     default:
       return state
@@ -55,17 +27,10 @@ export const success = (data) => ({
   payload: data,
 })
 
-export const body = (body) => ({
-  type: 'BODY',
-  payload: body,
-})
+
 
 export const history = (history) => ({
   type: 'HISTORY',
   payload: history,
 })
 
-export const getHistory = (history) => ({
-  type: 'GET_HISTORY',
-  payload: history,
-})
