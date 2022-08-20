@@ -1,17 +1,30 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios';
+import React, { useEffect, useState, useReducer } from 'react'
+import axios from 'axios'
 import './form.scss'
+import reducer, {
+  success,
+  body,
+  reqParams,
+  history,
+  getHistory,
+} from '../../reducer'
+const initialState = {
+  data: [],
+  body: {},
+  reqParams: {},
+}
 
 function Form(props) {
-  //const [data, setData] = useState();
-  const [method, setMethod] = useState('');
-  const [url, setUrl] = useState('https://pokeapi.co/api/v2/pokemon');
+  const [state, dispatch] = useReducer(reducer, initialState)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const [method, setMethod] = useState('')
+  const [url, setUrl] = useState('https://pokeapi.co/api/v2/pokemon')
   const [body, setBody] = useState('')
 
   const handleSubmit = (e) => {
     e.preventDefault()
   }
-
 
   const changeUrl = (e) => {
     setUrl(e.target.value)
@@ -21,64 +34,93 @@ function Form(props) {
     setMethod(method)
   }
 
-
-
-  // USE EFFECT TO SET METHOD FOR EACTH RENDER OR CLICKS IN ANY ROUTE... 
+  // USE EFFECT TO SET METHOD FOR EACTH RENDER OR CLICKS IN ANY ROUTE...
   //.....
   useEffect(() => {
     setMethod(method)
-  }, [method]);
+  }, [method])
 
+  const browseUrl = async (e) => {
+    if (method === 'GET') {
+      setTimeout(() => {
+        setIsLoading(true)
+      })
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 2000)
 
-  const browseUrl = async(e)=>{
-    if(method==="GET"){
-      const result = await axios.get(url)
-      const data = {
-        header: result.headers,
-        status: result.status,
-        count: result.data.length,
-        response: result.data,
-      }
-      props.handleApiCall(data);
+      setTimeout(async () => {
+        const result = await axios.get(url)
+        const data = {
+          header: result.headers,
+          status: result.status,
+          count: result.data.length,
+          response: result.data,
+        }
+        setIsLoading(false)
+        dispatch(success(data))
+        props.handleApiCall(data)
+      }, 1000)
+    } else if (method === 'POST') {
+      setTimeout(() => {
+        setIsLoading(true)
+      })
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 2000)
+      setTimeout(async () => {
+        const result = await axios.post(url)
+        const data = {
+          header: result.headers,
+          status: result.status,
+          count: result.data.length,
+          response: result.data,
+        }
+        setIsLoading(false)
+        dispatch(body(data))
+        props.handleApiCall(data)
+      }, 1000)
+    } else if (method === 'DELETE') {
+      setTimeout(() => {
+        setIsLoading(true)
+      })
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 2000)
+      setTimeout(async () => {
+        const result = await axios.delete(url)
+        const data = {
+          header: result.headers,
+          status: result.status,
+          count: result.data.length,
+          response: result.data,
+        }
+        props.handleApiCall(data)
+      }, 1000)
+    } else if (method === 'PUT') {
+      setTimeout(() => {
+        setIsLoading(true)
+      })
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 2000)
+      setTimeout(async () => {
+        const result = await axios.put(url)
+        const data = {
+          header: result.headers,
+          status: result.status,
+          count: result.data.length,
+          response: result.data,
+        }
+        props.handleApiCall(data)
+      }, 1000)
     }
-    else if(method==='POST'){
-      const result = await axios.post(url);
-      const data = {
-        header: result.headers,
-        status: result.status,
-        count: result.data.length,
-        response: result.data,
-      }
-      props.handleApiCall(data);
-    }
-    else if (method === 'DELETE') {
-      const result = await axios.delete(url);
-      const data = {
-        header: result.headers,
-        status: result.status,
-        count: result.data.length,
-        response: result.data,
-      }
-      props.handleApiCall(data);
-    }
-    else if (method === 'PUT') {
-      const result = await axios.put(url);
-      const data = {
-        header: result.headers,
-        status: result.status,
-        count: result.data.length,
-        response: result.data,
-      }
-      props.handleApiCall(data);
-    }
-    
   }
 
-   const textHandler = () => {
-     const content = document.getElementById('body').value
-     setBody(content)
-   }
-  
+  const textHandler = () => {
+    const content = document.getElementById('body').value
+    setBody(content)
+  }
 
   return (
     <>
@@ -112,14 +154,19 @@ function Form(props) {
             DELETE
           </button>
         </label>
+        {isLoading ? <div class='loader'>Loading...</div> : <div></div>}
+        {method === 'POST' || method === 'PUT' ? (
+          <>
+            <h3>To Add or Update the json data:</h3>
+            <textarea
+              id='bodyText'
+              rows={1111}
+              cols={1000}
+              onInput={textHandler}
+            ></textarea>
+          </>
+        ) : null}
       </form>
-      
-      {method === 'POST' || method === 'PUT' ? (
-        <>
-        <h3>To Add or Update the json data:</h3>
-        <textarea id='bodyText' rows={1111} cols={1000} onInput={textHandler}></textarea>
-        </>
-      ) : null}
     </>
   )
 }
