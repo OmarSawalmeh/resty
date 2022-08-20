@@ -18,6 +18,9 @@ Build a simple web application using **REACT JS** and style it with **Saas** to 
 - Test React
 
 ## **Summary of work:**
+- ### **Loading to Fetch Data From API**
+   ![](./resty/asset/Loading-to-Fetch-data.png)
+
 - ### **Fetch Data From API**
    ![](./resty/asset/jsonData.png)
 
