@@ -8,6 +8,7 @@ import Header from './components/header';
 import Footer from './components/footer';
 import Form from './components/form';
 import Results from './components/results';
+import History from './components/history';
 
 function App () {
 
@@ -19,9 +20,10 @@ function App () {
 
     return (
       <>
-        <Header  />
+        <Header />
         <Form handleApiCall={apiData} />
         <Results data={data} />
+        <History history={data}/>
         <Footer />
       </>
     )
